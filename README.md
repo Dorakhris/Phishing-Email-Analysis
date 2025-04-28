@@ -1,15 +1,17 @@
-Phishing Email Analysis: Detecting a Spoofed Microsoft Notification
+#Phishing Email Analysis: Detecting a Spoofed Microsoft Notification
 
-Introduction
+#Introduction
 This project documents my analysis of a suspicious email with the subject “Microsoft account unusual signin activity,” claiming to originate from Microsoft. As a SOC analyst at CyberTech Solutions, I systematically investigated the email’s legitimacy to determine if it was a genuine notification or a phishing attempt. Using MXToolbox, VirusTotal, and AbuseIPDB, I analyzed email headers, IP origins, authentication protocols, and content, identifying multiple indicators of spoofing. This report details my methodology, findings, and recommendations, highlighting my expertise in email spoofing analysis and Digital Forensics and Incident Response (DFIR).
-Objective
+
+#Objective
 The objective was to evaluate the email’s authenticity by examining its headers, IP origins, authentication status, and content, confirming its malicious nature and proposing mitigation strategies to strengthen email security.
-Methodology
+
+#Methodology
 I followed a structured approach to analyze the email:
 
-Header Analysis: Parsed email headers to trace the message’s path and identify anomalies.
-IP and Domain Analysis: Verified the originating IP and sender domain using MXToolbox and AbuseIPDB.
-Authentication Verification: Checked SPF, DKIM, and DMARC results for sender authenticity.
+#Header Analysis: Parsed email headers to trace the message’s path and identify anomalies.
+#IP and Domain Analysis: Verified the originating IP and sender domain using MXToolbox and AbuseIPDB.
+#Authentication Verification: Checked SPF, DKIM, and DMARC results for sender authenticity.
 Content Examination: Inspected the reply-to address and embedded tracking pixel for malicious indicators.
 Timestamp Analysis: Evaluated hop timestamps for irregularities suggesting manipulation.
 
