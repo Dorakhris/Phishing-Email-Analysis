@@ -33,7 +33,7 @@ Issue: The IP, tied to a non-Microsoft server, contradicted the email’s claime
 # 2. Email Path Analysis
 The email passed through five servers:
 | Hop | Server | IP Address | Note |
-|-----|-----------------------------|------------|
+|-----|-----------------------------|------------|------------|
 | 1   | atujpdfghher.co.uk | 89.144.44.41 | Suspicious origin |
 | 2   | MW2NAM04FT048.mail.protection.outlook.com | 10.13.30.233 | Microsoft EOP |
 | 3   | MW2NAM04FT048.cop-NAM04.prod.protection.outlook.com | 2603:10b6:303:85:cafe::78 | Microsoft EOP |
@@ -129,7 +129,9 @@ This project highlights my ability to detect email spoofing through systematic h
 
 # References
 MXToolbox
+
 VirusTotal
+
 AbuseIPDB
 
 
