@@ -24,7 +24,7 @@ Manual Parsing: Extracted authentication and sender details from headers.
 
 # Key Findings
 The analysis confirmed the email as a spoofed phishing attempt, based on the following indicators:
-1. Suspicious Originating IP
+# 1. Suspicious Originating IP
 
 IP: 89.144.44.41
 Location: Frankfurt am Main, Germany (via AbuseIPDB)
