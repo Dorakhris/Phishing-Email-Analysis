@@ -1,60 +1,60 @@
 ### Phishing Email Analysis: Detecting a Spoofed Microsoft Notification
 
 # Introduction
-This project documents my analysis of a suspicious email with the subject “Microsoft account unusual signin activity,” claiming to originate from Microsoft. As a SOC analyst at CyberTech Solutions, I systematically investigated the email’s legitimacy to determine if it was a genuine notification or a phishing attempt. Using MXToolbox, VirusTotal, and AbuseIPDB, I analyzed email headers, IP origins, authentication protocols, and content, identifying multiple indicators of spoofing. This report details my methodology, findings, and recommendations, highlighting my expertise in email spoofing analysis and Digital Forensics and Incident Response (DFIR).
+This project involved a detailed analysis of a suspicious email claiming to originate from Microsoft, with the subject “Microsoft account unusual signin activity.” As a SOC analyst at CyberTech Solutions, I investigated the email’s legitimacy to determine if it was a genuine notification or a phishing attempt. Using tools like MXToolbox, VirusTotal, and AbuseIPDB, I examined email headers, authentication protocols, and sender details, uncovering multiple indicators of spoofing. This report documents my methodology, findings, and recommendations, showcasing my skills in email spoofing analysis and threat detection. The project aligns with my expertise in Digital Forensics and Incident Response (DFIR), focusing on log analysis and threat identification.
 
 # Objective
-The objective was to evaluate the email’s authenticity by examining its headers, IP origins, authentication status, and content, confirming its malicious nature and proposing mitigation strategies to strengthen email security.
+The goal was to assess the email’s authenticity by analyzing its headers, IP origins, authentication status, and content. The analysis aimed to identify spoofing indicators, confirm the email’s malicious nature, and propose mitigation strategies to enhance organizational email security.
 
 # Methodology
-I followed a structured approach to analyze the email:
+I conducted a structured analysis of the email, focusing on the following steps:
 
-Header Analysis: Parsed email headers to trace the message’s path and identify anomalies.
-IP and Domain Analysis: Verified the originating IP and sender domain using MXToolbox and AbuseIPDB.
-Authentication Verification: Checked SPF, DKIM, and DMARC results for sender authenticity.
-Content Examination: Inspected the reply-to address and embedded tracking pixel for malicious indicators.
-Timestamp Analysis: Evaluated hop timestamps for irregularities suggesting manipulation.
+Header Analysis: Extracted and examined email headers to trace the message’s path and identify discrepancies.
+IP and Domain Analysis: Used MXToolbox and AbuseIPDB to verify the originating IP and sender domain.
+Authentication Checks: Evaluated SPF, DKIM, and DMARC results to assess sender authenticity.
+Content Inspection: Identified suspicious elements, such as the reply-to address and tracking pixel.
+Timestamp Verification: Analyzed hop timestamps for anomalies indicating manipulation.
 
 # Tools Used
-
-MXToolbox: Traced server paths and analyzed headers.
-VirusTotal: Assessed the tracking pixel’s domain reputation.
-AbuseIPDB: Geolocated and evaluated the originating IP.
-Manual Parsing: Extracted authentication and sender details from headers.
+MXToolbox: For tracing the email’s server path and analyzing headers.
+VirusTotal: To check the reputation of the tracking pixel’s domain (thebandalisty.com).
+AbuseIPDB: To geolocate and assess the originating IP (89.144.44.41).
+Manual Header Parsing: To extract authentication results and sender details.
 
 # Key Findings
 The analysis confirmed the email as a spoofed phishing attempt, based on the following indicators:
-# 1. Suspicious Originating IP
 
-IP: 89.144.44.41
-Location: Frankfurt am Main, Germany (via AbuseIPDB)
-Issue: The IP, tied to a non-Microsoft server, contradicted the email’s claimed Russia-based sign-in, indicating spoofing.
+# 1. Suspicious Originating IP
+IP Address: 89.144.44.41
+Location: Frankfurt am Main, Hesse, Germany (verified via AbuseIPDB).
+Discrepancy: The email claimed a Russia-based sign-in, but the IP traced to a German server, not Microsoft’s infrastructure. This mismatch suggests spoofing, as legitimate Microsoft emails originate from authorized servers.
 
 # 2. Email Path Analysis
-The email passed through five servers:
+The email traversed five servers, detailed below:
 | Hop | Server | IP Address | Note |
 |-----|-----------------------------|------------|------------|
-| 1   | atujpdfghher.co.uk | 89.144.44.41 | Suspicious origin |
-| 2   | MW2NAM04FT048.mail.protection.outlook.com | 10.13.30.233 | Microsoft EOP |
-| 3   | MW2NAM04FT048.cop-NAM04.prod.protection.outlook.com | 2603:10b6:303:85:cafe::78 | Microsoft EOP |
-| 4   | MW4PR04CA0179.outlook.office365.com | 2603:10b6:303:85::34 | Internal server |
-| 5   | IA1PR19MB6449.namprd19.prod.outlook.com | 2603:10b6:208:38b::5 | Delivery server |
+| 1   | atujpdfghher.co.uk | 89.144.44.41 | Origin - suspicious domain |
+| 2   | MW2NAM04FT048.mail.protection.outlook.com | 10.13.30.233 | Microsoft EOP protection |
+| 3   | MW2NAM04FT048.cop-NAM04.prod.protection.outlook.com | 2603:10b6:303:85:cafe::78 | Microsoft EOP server|
+| 4   | MW4PR04CA0179.outlook.office365.com | 2603:10b6:303:85::34 | Internal Microsoft server |
+| 5   | IA1PR19MB6449.namprd19.prod.outlook.com | 2603:10b6:208:38b::5 | Final delivery server |
 
 
-
-Why Significant: The origin server (atujpdfghher.co.uk) differs from the sender domain (access-accsecurity.com), a phishing tactic to mask the source.
-Timestamp Anomaly: A 2-second mismatch (00:15:46 to 00:15:44) between hops 2 and 3 suggests header manipulation, uncommon in Microsoft’s synchronized infrastructure.
+Why Significant: The origin server (atujpdfghher.co.uk) differs from the sender domain (access-accsecurity.com), a common phishing tactic to obscure the true source.
+Timestamp Anomaly: A 2-second mismatch between hops 2 and 3 (00:15:46 vs. 00:15:44) suggests header manipulation or clock skew, leaning toward intentional obfuscation given other spoofing indicators.
 
 # 3. Authentication Failures
 
 SPF: spf=none
-Why: The sending server was not authorized for atujpdfghher.co.uk, failing sender verification.
+Why: Indicates the sending server (89.144.44.41) was not authorized for the domain atujpdfghher.co.uk, failing sender verification.
 
 DKIM: dkim=none
-Why: No digital signature, preventing authenticity confirmation.
+Why: No digital signature was present, preventing authenticity verification.
 
 DMARC: dmarc=permerror
-Why: A misconfigured DMARC record caused validation failure, bypassing strict filtering.
+Why: A misconfigured or missing DMARC record caused validation failure, allowing the email to bypass strict filtering.
+
+Summary: The complete lack of authentication (SPF, DKIM, DMARC) is a hallmark of phishing emails, as legitimate Microsoft emails consistently pass these checks
 
 
 # Summary: 
@@ -62,57 +62,59 @@ Complete authentication failure is a strong phishing indicator, unlike Microsoft
 
 # 4. Sender and Reply-To Mismatch
 From: Microsoft account team no-reply@access-accsecurity.com
-Issue: access-accsecurity.com is not Microsoft-affiliated and recently registered.
+Why Suspicious: The domain access-accsecurity.com is not Microsoft-affiliated and was recently registered, a common phishing trait.
 
 Reply-To: solutionteamrecognizd03@gmail.com
-Issue: A Gmail address is inconsistent with Microsoft’s corporate practices, suggesting an attacker-controlled account.
+Why Suspicious: A public Gmail address is inconsistent with Microsoft’s corporate email practices, indicating an attacker-controlled account for redirecting responses.
 
 # 5. Tracking Pixel
 Domain: thebandalisty.com
-Issue: Flagged as suspicious by VirusTotal, indicating intent to track user interactions, a common phishing technique.
+Finding: VirusTotal flagged this domain as suspicious, suggesting the pixel was embedded to track user interactions, a tactic used in phishing to confirm active targets.
+Why Significant: Tracking pixels are rare in legitimate corporate emails but common in malicious campaigns.
 
 # 6. Anonymous Authentication
 Header: X-MS-Exchange-Organization-AuthAs: Anonymous
-Issue: The sender was unauthenticated, verified by MW2NAM04FT048.eop-NAM04.prod.protection.outlook.com, unlike legitimate Microsoft emails.
+Finding: The sender was unauthenticated by Microsoft’s Exchange servers, confirmed by the authentication source (MW2NAM04FT048.eop-NAM04.prod.protection.outlook.com).
+Why Significant: Legitimate Microsoft emails are authenticated, not marked as anonymous.
 
 # 7. Urgency in Subject
 
 Subject: “Microsoft account unusual signin activity”
-Issue: Creates urgency to prompt user action, a phishing tactic to exploit trust.
+Finding: The subject creates a sense of urgency, a psychological tactic to prompt users to click malicious links or respond hastily.
+Why Significant: Phishing emails often exploit urgency to bypass critical thinking.
 
 # Header Snippet
-Received: from atujpdfghher.co.uk (89.144.44.41) by MW2NAM04FT048.mail.protection.outlook.com (10.13.30.233); 00:15:46
-Received: from MW2NAM04FT048.cop-NAM04.prod.protection.outlook.com (2603:10b6:303:85:cafe::78) by MW4PR04CA0179.outlook.office365.com (2603:10b6:303:85::34); 00:15:44
+Below is a sanitized excerpt of the email headers analyzed:
+Received: from atujpdfghher.co.uk (89.144.44.41) by MW2NAM04FT048.mail.protection.outlook.com (10.13.30.233) at 00:15:46
+Received: from MW2NAM04FT048.cop-NAM04.prod.protection.outlook.com (2603:10b6:303:85:cafe::78) by MW4PR04CA0179.outlook.office365.com (2603:10b6:303:85::34) at 00:15:44
 From: Microsoft account team <no-reply@access-accsecurity.com>
 Reply-To: solutionteamrecognizd03@gmail.com
 Subject: Microsoft account unusual signin activity
 Authentication-Results: spf=none; dkim=none; dmarc=permerror
 X-MS-Exchange-Organization-AuthAs: Anonymous
 
-This illustrates the suspicious origin, authentication failures, and mismatched addresses.
+This snippet highlights the suspicious origin, authentication failures, and mismatched sender/reply-to addresses.
 
 ### Recommended Actions
-To mitigate email spoofing, I recommend:
+Based on the findings, I propose the following measures to mitigate email spoofing risks:
 
-# Authentication Protocols:
-Configure strict SPF records for authorized servers.
-Implement DKIM signing for email integrity.
-Deploy DMARC with a p=reject policy to block unauthenticated emails.
+# Strengthen Authentication Protocols:
+SPF: Configure strict SPF records to list authorized sending servers, preventing unauthorized use of your domain.
+DKIM: Implement DKIM signing for all outgoing emails to ensure message integrity.
+DMARC: Deploy a DMARC policy (e.g., p=reject) to instruct recipients to block or quarantine unauthenticated emails.
 
-# Security Enhancements:
-Use Advanced Threat Protection for header and content analysis.
-Apply heuristic analysis to detect sophisticated phishing.
+# Enhance Email Security:
+Deploy Advanced Threat Protection (ATP) to analyze headers, content, and attachments for phishing patterns.
+Use heuristic analysis to detect sophisticated spoofing attempts that bypass standard checks.
 
-# Training:
-Train employees to verify sender addresses and avoid suspicious links.
+# Employee Training:
+Conduct regular training on identifying phishing emails, focusing on verifying sender addresses and avoiding suspicious links.
 
-# Tools:
-Equip SOC teams with MXToolbox and VirusTotal for efficient analysis.
+# Security Tools:
+Equip SOC teams with tools like MXToolbox and VirusTotal for efficient header and domain analysis.
 
-# Audits:
-Regularly audit SPF, DKIM, and DMARC configurations.
-
-
+# Routine Audits:
+Perform periodic audits of SPF, DKIM, and DMARC configurations to ensure robust email security.
 
 # Replicating the Analysis
 To perform similar analysis:
@@ -125,14 +127,14 @@ Inspect Content: Verify “From” and “Reply-To” addresses; scan URLs with 
 Verify Timestamps: Check “Received” timestamps for anomalies.
 
 # Conclusion
-This project highlights my ability to detect email spoofing through systematic header analysis, IP verification, and authentication checks. By identifying a phishing attempt masquerading as a Microsoft notification, I demonstrated proficiency in DFIR, threat detection, and log analysis. The report serves as a portfolio piece for my GitHub, showcasing my SOC analyst skills. I invite feedback to refine this analysis and am eager to contribute these capabilities to cybersecurity roles.
+This phishing email analysis project demonstrated my ability to detect and analyze spoofed emails using industry-standard tools and methodologies. By identifying critical indicators—suspicious IP origins, authentication failures, mismatched domains, and tracking pixels—I confirmed the email as a phishing attempt. The findings underscore the importance of robust email authentication and proactive security measures. This project enhances my portfolio as a SOC analyst, showcasing my expertise in threat detection, log analysis, and DFIR. I welcome feedback or contributions to improve this analysis, and I’m eager to apply these skills in SOC or incident response roles.
 
 # References
-MXToolbox
+MXToolbox: mxtoolbox.com
 
-VirusTotal
+VirusTotal: virustotal.com
 
-AbuseIPDB
+AbuseIPDB: abuseipdb.com
 
 
 
