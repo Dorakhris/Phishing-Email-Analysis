@@ -13,7 +13,7 @@ I conducted a structured analysis of the email, focusing on the following steps:
 
 **IP and Domain Analysis**: Used MXToolbox and AbuseIPDB to verify the originating IP and sender domain.
 
-A**uthentication Checks**: Evaluated SPF, DKIM, and DMARC results to assess sender authenticity.
+**Authentication Checks**: Evaluated SPF, DKIM, and DMARC results to assess sender authenticity.
 
 **Content Inspection**: Identified suspicious elements, such as the reply-to address and tracking pixel.
 
@@ -51,7 +51,7 @@ The email traversed five servers, detailed below:
 | 5   | IA1PR19MB6449.namprd19.prod.outlook.com | 2603:10b6:208:38b::5 | Final delivery server |
 
 
-**Significance**: The origin server (atujpdfghher.co.uk) differs from the sender domain (access-accsecurity.com), a common phishing tactic to obscure the true source.
+_**Significance**_: The origin server (atujpdfghher.co.uk) differs from the sender domain (access-accsecurity.com), a common phishing tactic to obscure the true source.
 
 **Timestamp Anomaly**: A 2-second mismatch between hops 2 and 3 (00:15:46 vs. 00:15:44) suggests header manipulation or clock skew, leaning toward intentional obfuscation given other spoofing indicators.
 
@@ -59,15 +59,15 @@ The email traversed five servers, detailed below:
 
 **SPF**: spf=none
 
-**Significance**: Indicates the sending server (89.144.44.41) was not authorized for the domain atujpdfghher.co.uk, failing sender verification.
+_**Significance**_: Indicates the sending server (89.144.44.41) was not authorized for the domain atujpdfghher.co.uk, failing sender verification.
 
 **DKIM**: dkim=none
 
-**Significance**: No digital signature was present, preventing authenticity verification.
+_**Significance**_: No digital signature was present, preventing authenticity verification.
 
 **DMARC**: dmarc=permerror
 
-**Significance**: A misconfigured or missing DMARC record caused validation failure, allowing the email to bypass strict filtering.
+_**Significance**_: A misconfigured or missing DMARC record caused validation failure, allowing the email to bypass strict filtering.
 
 **Summary**: The complete lack of authentication (SPF, DKIM, DMARC) is a hallmark of phishing emails, as legitimate Microsoft emails consistently pass these checks
 
@@ -78,18 +78,18 @@ Complete authentication failure is a strong phishing indicator, unlike Microsoft
 # 4. Sender and Reply-To Mismatch
 **From**: Microsoft account team no-reply@access-accsecurity.com
 
-**Significance**: The domain access-accsecurity.com is not Microsoft-affiliated and was recently registered, a common phishing trait.
+_**Significance**_: The domain access-accsecurity.com is not Microsoft-affiliated and was recently registered, a common phishing trait.
 
 **Reply-To**: solutionteamrecognizd03@gmail.com
 
-**Significance**: A public Gmail address is inconsistent with Microsoft’s corporate email practices, indicating an attacker-controlled account for redirecting responses.
+_**Significance**_: A public Gmail address is inconsistent with Microsoft’s corporate email practices, indicating an attacker-controlled account for redirecting responses.
 
 # 5. Tracking Pixel
 **Domain**: thebandalisty.com
 
 **Finding**: VirusTotal flagged this domain as suspicious, suggesting the pixel was embedded to track user interactions, a tactic used in phishing to confirm active targets.
 
-**Significance**: Tracking pixels are rare in legitimate corporate emails but common in malicious campaigns.
+_**Significance**_: Tracking pixels are rare in legitimate corporate emails but common in malicious campaigns.
 
 # 6. Anonymous Authentication
 
@@ -97,7 +97,7 @@ Complete authentication failure is a strong phishing indicator, unlike Microsoft
 
 **Finding**: The sender was unauthenticated by Microsoft’s Exchange servers, confirmed by the authentication source (MW2NAM04FT048.eop-NAM04.prod.protection.outlook.com).
 
-**Significance**: Legitimate Microsoft emails are authenticated, not marked as anonymous.
+_**Significance**_: Legitimate Microsoft emails are authenticated, not marked as anonymous.
 
 # 7. Urgency in Subject
 
@@ -105,10 +105,10 @@ Complete authentication failure is a strong phishing indicator, unlike Microsoft
 
 **Finding**: The subject creates a sense of urgency, a psychological tactic to prompt users to click malicious links or respond hastily.
 
-**Significance**: Phishing emails often exploit urgency to bypass critical thinking.
+_**Significance**:_ Phishing emails often exploit urgency to bypass critical thinking.
 
 # Header Snippet
-Below is a sanitized excerpt of the email headers analyzed:
+_**Below is a sanitized excerpt of the email headers analyzed:**_
 
 Received: from atujpdfghher.co.uk (89.144.44.41) by MW2NAM04FT048.mail.protection.outlook.com (10.13.30.233) at 00:15:46
 
@@ -124,7 +124,7 @@ Authentication-Results: spf=none; dkim=none; dmarc=permerror
 
 X-MS-Exchange-Organization-AuthAs: Anonymous
 
-This snippet highlights the suspicious origin, authentication failures, and mismatched sender/reply-to addresses.
+_This snippet highlights the suspicious origin, authentication failures, and mismatched sender/reply-to addresses._
 
 ### Recommended Actions
 Based on the findings, I propose the following measures to mitigate email spoofing risks:
@@ -166,7 +166,7 @@ To perform similar analysis:
 **Verify Timestamps**: Check “Received” timestamps for anomalies.
 
 # Conclusion
-This phishing email analysis project demonstrated my ability to detect and analyze spoofed emails using industry-standard tools and methodologies. By identifying critical indicators—suspicious IP origins, authentication failures, mismatched domains, and tracking pixels—I confirmed the email as a phishing attempt. The findings underscore the importance of robust email authentication and proactive security measures. This project enhances my portfolio as a SOC analyst, showcasing my expertise in threat detection, log analysis, and DFIR. I welcome feedback or contributions to improve this analysis, and I’m eager to apply these skills in SOC or incident response roles.
+This phishing email analysis project demonstrated my ability to detect and analyze spoofed emails using industry-standard tools and methodologies. By identifying critical indicators—suspicious IP origins, authentication failures, mismatched domains, and tracking pixels, I confirmed the email as a phishing attempt. The findings underscore the importance of robust email authentication and proactive security measures. This project enhances my portfolio as a SOC analyst, showcasing my expertise in threat detection, log analysis, and DFIR. I welcome feedback or contributions to improve this analysis, and I’m eager to apply these skills in SOC or incident response roles.
 
 # References
 MXToolbox: mxtoolbox.com
