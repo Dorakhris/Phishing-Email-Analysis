@@ -10,15 +10,22 @@ The goal was to assess the email’s authenticity by analyzing its headers, IP o
 I conducted a structured analysis of the email, focusing on the following steps:
 
 Header Analysis: Extracted and examined email headers to trace the message’s path and identify discrepancies.
+
 IP and Domain Analysis: Used MXToolbox and AbuseIPDB to verify the originating IP and sender domain.
+
 Authentication Checks: Evaluated SPF, DKIM, and DMARC results to assess sender authenticity.
+
 Content Inspection: Identified suspicious elements, such as the reply-to address and tracking pixel.
+
 Timestamp Verification: Analyzed hop timestamps for anomalies indicating manipulation.
 
 # Tools Used
 MXToolbox: For tracing the email’s server path and analyzing headers.
+
 VirusTotal: To check the reputation of the tracking pixel’s domain (thebandalisty.com).
+
 AbuseIPDB: To geolocate and assess the originating IP (89.144.44.41).
+
 Manual Header Parsing: To extract authentication results and sender details.
 
 # Key Findings
@@ -26,6 +33,7 @@ The analysis confirmed the email as a spoofed phishing attempt, based on the fol
 
 # 1. Suspicious Originating IP
 IP Address: 89.144.44.41
+
 Location: Frankfurt am Main, Hesse, Germany (verified via AbuseIPDB).
 
 Discrepancy: The email claimed a Russia-based sign-in, but the IP traced to a German server, not Microsoft’s infrastructure. This mismatch suggests spoofing, as legitimate Microsoft emails originate from authorized servers.
@@ -42,6 +50,7 @@ The email traversed five servers, detailed below:
 
 
 Why Significant: The origin server (atujpdfghher.co.uk) differs from the sender domain (access-accsecurity.com), a common phishing tactic to obscure the true source.
+
 Timestamp Anomaly: A 2-second mismatch between hops 2 and 3 (00:15:46 vs. 00:15:44) suggests header manipulation or clock skew, leaning toward intentional obfuscation given other spoofing indicators.
 
 # 3. Authentication Failures
@@ -70,28 +79,42 @@ Why Suspicious: A public Gmail address is inconsistent with Microsoft’s corpor
 
 # 5. Tracking Pixel
 Domain: thebandalisty.com
+
 Finding: VirusTotal flagged this domain as suspicious, suggesting the pixel was embedded to track user interactions, a tactic used in phishing to confirm active targets.
+
 Why Significant: Tracking pixels are rare in legitimate corporate emails but common in malicious campaigns.
 
 # 6. Anonymous Authentication
+
 Header: X-MS-Exchange-Organization-AuthAs: Anonymous
+
 Finding: The sender was unauthenticated by Microsoft’s Exchange servers, confirmed by the authentication source (MW2NAM04FT048.eop-NAM04.prod.protection.outlook.com).
+
 Why Significant: Legitimate Microsoft emails are authenticated, not marked as anonymous.
 
 # 7. Urgency in Subject
 
 Subject: “Microsoft account unusual signin activity”
+
 Finding: The subject creates a sense of urgency, a psychological tactic to prompt users to click malicious links or respond hastily.
+
 Why Significant: Phishing emails often exploit urgency to bypass critical thinking.
 
 # Header Snippet
 Below is a sanitized excerpt of the email headers analyzed:
+
 Received: from atujpdfghher.co.uk (89.144.44.41) by MW2NAM04FT048.mail.protection.outlook.com (10.13.30.233) at 00:15:46
+
 Received: from MW2NAM04FT048.cop-NAM04.prod.protection.outlook.com (2603:10b6:303:85:cafe::78) by MW4PR04CA0179.outlook.office365.com (2603:10b6:303:85::34) at 00:15:44
+
 From: Microsoft account team <no-reply@access-accsecurity.com>
+
 Reply-To: solutionteamrecognizd03@gmail.com
+
 Subject: Microsoft account unusual signin activity
+
 Authentication-Results: spf=none; dkim=none; dmarc=permerror
+
 X-MS-Exchange-Organization-AuthAs: Anonymous
 
 This snippet highlights the suspicious origin, authentication failures, and mismatched sender/reply-to addresses.
@@ -106,6 +129,7 @@ DMARC: Deploy a DMARC policy (e.g., p=reject) to instruct recipients to block or
 
 # Enhance Email Security:
 Deploy Advanced Threat Protection (ATP) to analyze headers, content, and attachments for phishing patterns.
+
 Use heuristic analysis to detect sophisticated spoofing attempts that bypass standard checks.
 
 # Employee Training:
@@ -121,10 +145,15 @@ Perform periodic audits of SPF, DKIM, and DMARC configurations to ensure robust 
 To perform similar analysis:
 
 Access Headers: View raw headers in your email client (e.g., Outlook’s “View Source”).
+
 Trace IPs: Use AbuseIPDB to geolocate IPs (e.g., 89.144.44.41).
+
 Analyze Path: Parse “Received” headers with MXToolbox to map server hops.
+
 Check Authentication: Extract SPF/DKIM/DMARC from Authentication-Results using MXToolbox or dig (e.g., dig txt access-accsecurity.com).
+
 Inspect Content: Verify “From” and “Reply-To” addresses; scan URLs with VirusTotal.
+
 Verify Timestamps: Check “Received” timestamps for anomalies.
 
 # Conclusion
