@@ -27,6 +27,7 @@ The analysis confirmed the email as a spoofed phishing attempt, based on the fol
 # 1. Suspicious Originating IP
 IP Address: 89.144.44.41
 Location: Frankfurt am Main, Hesse, Germany (verified via AbuseIPDB).
+
 Discrepancy: The email claimed a Russia-based sign-in, but the IP traced to a German server, not Microsoft’s infrastructure. This mismatch suggests spoofing, as legitimate Microsoft emails originate from authorized servers.
 
 # 2. Email Path Analysis
